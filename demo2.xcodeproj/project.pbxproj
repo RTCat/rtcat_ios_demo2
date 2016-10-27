@@ -13,6 +13,7 @@
 		F23FE26D1DC093EC0067D87B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F23FE26B1DC093EC0067D87B /* Main.storyboard */; };
 		F23FE26F1DC093EC0067D87B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F23FE26E1DC093EC0067D87B /* Assets.xcassets */; };
 		F23FE2721DC093EC0067D87B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F23FE2701DC093EC0067D87B /* LaunchScreen.storyboard */; };
+		F23FE27B1DC09DDC0067D87B /* WhiteBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = F23FE27A1DC09DDC0067D87B /* WhiteBoardView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		F23FE26E1DC093EC0067D87B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F23FE2711DC093EC0067D87B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F23FE2731DC093EC0067D87B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F23FE2791DC09DDC0067D87B /* WhiteBoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhiteBoardView.h; sourceTree = "<group>"; };
+		F23FE27A1DC09DDC0067D87B /* WhiteBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhiteBoardView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,14 +61,10 @@
 		F23FE2611DC093EC0067D87B /* demo2 */ = {
 			isa = PBXGroup;
 			children = (
-				F23FE2651DC093EC0067D87B /* AppDelegate.h */,
-				F23FE2661DC093EC0067D87B /* AppDelegate.m */,
+				F23FE2791DC09DDC0067D87B /* WhiteBoardView.h */,
+				F23FE27A1DC09DDC0067D87B /* WhiteBoardView.m */,
 				F23FE2681DC093EC0067D87B /* ViewController.h */,
 				F23FE2691DC093EC0067D87B /* ViewController.m */,
-				F23FE26B1DC093EC0067D87B /* Main.storyboard */,
-				F23FE26E1DC093EC0067D87B /* Assets.xcassets */,
-				F23FE2701DC093EC0067D87B /* LaunchScreen.storyboard */,
-				F23FE2731DC093EC0067D87B /* Info.plist */,
 				F23FE2621DC093EC0067D87B /* Supporting Files */,
 			);
 			path = demo2;
@@ -74,6 +73,12 @@
 		F23FE2621DC093EC0067D87B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F23FE26B1DC093EC0067D87B /* Main.storyboard */,
+				F23FE26E1DC093EC0067D87B /* Assets.xcassets */,
+				F23FE2701DC093EC0067D87B /* LaunchScreen.storyboard */,
+				F23FE2731DC093EC0067D87B /* Info.plist */,
+				F23FE2651DC093EC0067D87B /* AppDelegate.h */,
+				F23FE2661DC093EC0067D87B /* AppDelegate.m */,
 				F23FE2631DC093EC0067D87B /* main.m */,
 			);
 			name = "Supporting Files";
@@ -154,6 +159,7 @@
 				F23FE26A1DC093EC0067D87B /* ViewController.m in Sources */,
 				F23FE2671DC093EC0067D87B /* AppDelegate.m in Sources */,
 				F23FE2641DC093EC0067D87B /* main.m in Sources */,
+				F23FE27B1DC09DDC0067D87B /* WhiteBoardView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
