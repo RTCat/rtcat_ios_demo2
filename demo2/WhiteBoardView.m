@@ -10,30 +10,56 @@
 
 
 @implementation WhiteBoardView{
-    NSMutableArray *paths;
-    UIBezierPath *curPath;
-    UIColor *color;
+    NSMutableArray *myPaths;
+    UIBezierPath *myCurPath;
+    UIColor *myColor;
 
-    int width;
-    int pointX;
-    int pointY;
+    NSMutableArray *otherPaths;
+    UIBezierPath *otherCurPath;
+    UIColor *otherColor;
+    
 
+    int pathWidth;
+    
+    float viewWidth;
+    float viewHeight;
+    
 }
+
+
+- (void)addDelegate :(id<WhiteBoardDelegate> )delegate{
+    _delegate = delegate;
+}
+
 
 - (void)drawRect:(CGRect)rect{
     
-    for(int i = 0;i < paths.count;i++){
-        UIBezierPath *bezierPath = [paths objectAtIndex:i];
-        [color setStroke];
+    viewHeight = self.bounds.size.height;
+    viewWidth = self.bounds.size.width;
+    
+    for(int i = 0;i < myPaths.count;i++){
+        UIBezierPath *bezierPath = [myPaths objectAtIndex:i];
+        [myColor setStroke];
         [bezierPath stroke];
     }
+    
+    
+    for(int i = 0;i < otherPaths.count;i++){
+        UIBezierPath *bezierPath = [otherPaths objectAtIndex:i];
+        [otherColor setStroke];
+        [bezierPath stroke];
+    }
+    
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder{
     if(self = [super initWithCoder:aDecoder]){
-        paths = [[NSMutableArray alloc] init];
-        color = [UIColor blueColor];
-        width = 5;
+        myPaths = [[NSMutableArray alloc] init];
+        myColor = [UIColor blueColor];
+        otherPaths = [[NSMutableArray alloc] init];
+        otherColor = [UIColor greenColor];
+        
+        pathWidth = 5;
     }
     
     return self;
@@ -41,51 +67,63 @@
 
 
 -(void) touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    // Get a reference to any one of the user's touches.
+    
     UITouch *touch = [touches anyObject];
-    
-    // Conver the user's touch to an (x,y) coordinate.
-    CGPoint point = [touch locationInView:self];
-    
-    // Create a new path
-    curPath = [[UIBezierPath alloc] init];
-    [curPath setLineWidth:width];
-    
-    [paths addObject:curPath];
-    
-    // Move the current path to the point we extracted earlier.
-    [curPath moveToPoint:point];
-    
-    NSLog(@"point to (x=%f,y=%f)",point.x,point.y);
-    
-    // Let iOS know that we need to call the drawRect method again.
-    // This will refresh the view so that the most up-to-date paths are drawn
-    [self setNeedsDisplay];
 
+    CGPoint point = [touch locationInView:self];
+
+    myCurPath = [[UIBezierPath alloc] init];
+    [myCurPath setLineWidth:pathWidth];
+    
+    [myPaths addObject:myCurPath];
+
+    [myCurPath moveToPoint:point];
+    
+    [_delegate messageHandler:@"start point" X:(point.x/viewWidth) Y:(point.y/viewHeight)];
+    [self setNeedsDisplay];
     
 }
 
 
 -(void) touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    // Get a reference to any one of the user's touches.
+
     UITouch *touch = [touches anyObject];
-    
-    // Conver the user's touch to an (x,y) coordinate.
     CGPoint point = [touch locationInView:self];
+    [myCurPath addLineToPoint:point];
     
-    NSLog(@"path to (x=%f,y=%f)",point.x,point.y);
-    
-    // Add a straight line to the point we just extracted.
-    [curPath addLineToPoint:point];
-    
-    //Refresh the drawn paths
+    [_delegate messageHandler:@"middle point" X:(point.x/viewWidth) Y:(point.y/viewHeight)];
     [self setNeedsDisplay];
 }
 
-//-(void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-//    CGContextStrokePath(ctx);
-//}
+- (void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    UITouch *touch = [touches anyObject];
+    CGPoint point = [touch locationInView:self];
+    
+    [_delegate messageHandler:@"end point" X:(point.x/viewWidth) Y:(point.y/viewHeight)];
+}
+
+- (void)drawOtherHandle:(NSString *)type X:(float)x Y:(float)y{
+    
+    
+    CGPoint point = CGPointMake(x* viewWidth, y *viewHeight);
+    if([type  isEqualToString: @"start point"]){
+        otherCurPath = [[UIBezierPath alloc] init];
+        [otherCurPath setLineWidth:pathWidth];
+        [otherPaths addObject:otherCurPath];
+        [otherCurPath moveToPoint:point];
+    }else if([type isEqualToString:@"middle point"]){
+        [otherCurPath addLineToPoint:point];
+    }else if([type isEqualToString:@"end point"]){
+        //
+    }
+    
+    //todo 网络问题可能会导致数据包不按顺序到达，需要对这些绘制点进行排序后再绘制。
+    
+    [self setNeedsDisplay];
+    
+}
+
+
 
 @end
-
 
